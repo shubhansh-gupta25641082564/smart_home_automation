@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+        <style>
+            body{margin: 0;padding: 0;font-family: "Poppins", sans-serif;background-color: rgb(14, 16, 79);}
+            header{background-color: rgb(0, 0, 0);color: white;text-align: center;padding: 20px;}
+            #iotButton{background-color: transparent;color: white;border: none;cursor: pointer;font-size: 16px;}
+            #dropdownMenu{display: none;position: absolute;background-color: black;min-width: 160px;box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);z-index: 1;}
+            #dropdownMenu a {color: white;padding: 12px 16px;text-decoration: none;display: block;}
+            #dropdownMenu a:hover {background-color: #555;}
+            #imageSection {width: 100%;height: 50vh;overflow: hidden;}
+            #imageSection img {width: 100%;height: 100%;object-fit: cover;}
+            #mainContent {width: 50%;margin: 0 auto;padding: 20px;}
+            .toggle-container {display: flex;align-items: center;}
+            .toggle-label h1 {margin-right: 20px;color: rgb(0, 255, 174);}
+            .toggle-switch {position: relative;display: inline-block;width: 60px;height: 30px;}
+            .toggle-slider {position: absolute;cursor: pointer;top: 0;left: 0;right: 0;bottom: 0;background-color: #ccc;border-radius: 30px;transition: .4s;}
+            .toggle-slider:before {position: absolute;content: "";height: 26px;width: 26px;left: 2px;bottom: 2px;background-color: white;border-radius: 50%;transition: .4s;}
+            .toggle-input {display: none;}
+            .toggle-input:checked+.toggle-slider {background-color: #2196F3;}
+            .toggle-input:checked+.toggle-slider:before {transform: translateX(30px);}
+            .option-button {margin-bottom: 10px;padding: 12px 20px;font-size: 18px;border-radius: 15px;}
+            #statusMessage {margin-top: 20px;font-size: 18px;text-align: center;}
+            #statusMessage.on {color: blue;}
+            #statusMessage.off {color: red;}
+            #textMessage {position: absolute;bottom: 20px;right: 20px;font-size: 24px;color: rgb(83, 242, 242);}
+            #initialMessage {position: absolute;bottom: -30px;right: 14px;font-size: 38px;color: rgb(0, 255, 174);animation: fadeIn 2s;padding-bottom: 220px;}
+            #ledStatus, #fanStatus {margin-top: 10px;font-size: 16px;color: white;}
+            @keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}
+        </style>
+    </head>
+    <body>
+        <header>
+            <div><h2>Sri Radhe Shyam</h2></div>
+            <div><h3>Welcome to Sri Ji"s Smart Home</h3></div>
+            <button id="iotButton" onclick="toggleDropdown()">Control Panel For Different Rooms</button>
+            <div id="dropdownMenu">
+                <a href="#" onclick="showLivingRoomOptions()">Living Room</a>
+                <a href="#" onclick="showKitchenOptions()">Kitchen</a>
+                <a href="#" onclick="showBathRoomOptions()">Bed Room</a>
+                <a href="#" onclick="showBedRoomOptions()">Bath Room</a>
+            </div>
+        </header>
+        <div id="imageSection"><img src="https://www.checkboxtechnology.com/wp-content/uploads/2020/09/1_WtdyFZNDahpaoaxMGSCXIw.jpeg" alt="IOT Image"></div>
+        <div id="mainContent">
+            <div id="livingRoomOptions" style="display: none;">
+                <img src="https://th.bing.com/th/id/OIP.4hy_hgjhkHUpHrYnki2cOgAAAA?rs=1&pid=ImgDetMain" alt="Living Room Image">
+                <div class="toggle-container">
+                    <span class="toggle-label"><h1>Living Room Light :-</h1></span>
+                    <a href=\"/switch_on_the_living_room_light\"\"><button class="option-button" onclick="updateStatus('Living Room Light', true)">ON</button></a>
+                    <a href=\"/switch_off_the_living_room_light\"\"><button class="option-button" onclick="updateStatus('Living Room Light', false)">OFF</button></a>
+                </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><h1>Living Room Fan :-</h1></span>
+                <a href=\"/switch_on_the_living_room_fan\"\"><button class="option-button" onclick="updateStatus('Living Room Fan', true)">ON</button></a>
+                <a href=\"/switch_off_the_living_room_fan\"\"><button class="option-button" onclick="updateStatus('Living Room Fan', false)">OFF</button></a>
+            </div>
+        </div>
+        <div id="kitchenOptions" style="display: none;">
+            <img src="https://img.freepik.com/free-photo/3d-rendering-white-minimal-kitchen-with-wood-decoration_105762-2218.jpg?size=626&ext=jpg&ga=GA1.1.1412446893.1705190400&semt=ais" width="500" height="300" alt="Kitchen Image">
+            <div class="toggle-container">
+                <span class="toggle-label"><h1>Kitchen Light :-</h1></span>
+                <a href=\"/switch_on_the_kitchen_light\"\"><button class="option-button" onclick="updateStatus('Kitchen Light', true)">ON</button></a>
+                <a href=\"/switch_off_the_kitchen_light\"\"><button class="option-button" onclick="updateStatus('Kitchen Light', false)">OFF</button></a>
+            </div>
+        </div>
+        <div id="bathRoomOptions" style="display: none;">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/bedroom-ideas-rupp-studiodmitchell-ruppstudio-parkave-06a-1675097820.jpg" width="500" height="300" alt="Bedroom Image">
+            <div class="toggle-container">
+                <span class="toggle-label"><h1>Bedroom Light :-</h1></span>
+                <a href=\"/switch_on_the_bedroom_light\"\"><button class="option-button" onclick="updateStatus('Bedroom Light', true)">ON</button></a>
+                <a href=\"/switch_off_the_bedroom_light\"\"><button class="option-button" onclick="updateStatus('Bedroom Light', false)">OFF</button></a>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><h1>Bedroom Fan :-</h1></span>
+                <a href=\"/switch_on_the_bedroom_fan\"\"><button class="option-button" onclick="updateStatus('Bedroom Fan', true)">ON</button></a>
+                <a href=\"/switch_off_the_bedroom_fan\"\"><button class="option-button" onclick="updateStatus('Bedroom Fan', false)">OFF</button></a>
+            </div>
+        </div>
+        <div id="bedRoomOptions" style="display: none;">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmF0aHJvb218ZW58MHx8MHx8fDA%3D" width="500" height="300" alt="Bathroom Image">
+            <div class="toggle-container">
+                <span class="toggle-label"><h1>Bathroom Light :-</h1></span>
+                <a href=\"/switch_on_the_bathroom_light\"\"><button class="option-button" onclick="updateStatus('Bathroom Light', true)">ON</button></a>
+                <a href=\"/switch_off_the_bathroom_light\"\"><button class="option-button" onclick="updateStatus('Bathroom Light', false)">OFF</button></a>
+            </div>
+        </div>
+        <div id="statusMessage"></div>
+        <div id="ledStatus"></div>
+        <div id="fanStatus"></div>
+        <div id="initialMessage">Getting A Smart Home is Like Getting <br>A Smart Phone... Life Just Gets So Much Easier.</div>
+    </div>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>var typed = new Typed("#element", {strings: ["A project to make your life Modern,", "Comfortable,", "and Amazing..."],typeSpeed: 50,});</script>
+    <script>
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            var statusMessage = document.getElementById("statusMessage");
+            var isDisplayed = dropdownMenu.style.display === "block";
+            hideAllOptions();
+            dropdownMenu.style.display = isDisplayed ? "none" : "block";
+            statusMessage.textContent = "";
+            var textMessage = document.createElement("div");
+            textMessage.id = "textMessage";
+            textMessage.innerHTML = "Hello My Friend, this is the SmartHome Automation Prototype which helps you control devices."
+            document.body.appendChild(textMessage);}
+        function showLivingRoomOptions() {hideAllOptions();document.getElementById("livingRoomOptions").style.display = "block";}
+        function showKitchenOptions() {hideAllOptions();document.getElementById("kitchenOptions").style.display = "block";}
+        function showBathRoomOptions() {hideAllOptions();document.getElementById("bathRoomOptions").style.display = "block";}
+        function showBedRoomOptions() {hideAllOptions();document.getElementById("bedRoomOptions").style.display = "block";}
+        function showLedOptions() {hideAllOptions();document.getElementById("ledOptions").style.display = "block";}
+        function showFanOptions() {hideAllOptions();document.getElementById("fanOptions").style.display = "block";}
+        function hideAllOptions() {
+            var options = document.querySelectorAll("#livingRoomOptions, #kitchenOptions, #bathRoomOptions,#bedRoomOptions, #ledOptions, #fanOptions");
+            options.forEach(function (option) {option.style.display = "none";});
+            var textMessage = document.getElementById("textMessage");
+            if (textMessage) {textMessage.remove();}}
+        function updateStatus(device, isOn) {
+            var statusMessage = document.getElementById("statusMessage");
+            statusMessage.textContent = "Your " + device + " is " + (isOn ? "ON" : "OFF");
+            statusMessage.className = isOn ? "on" : "off";
+            if (device === "Living Room Light"){
+                var ledStatus = document.getElementById("ledStatus");
+                ledStatus.textContent = "Light Status :- " + (isOn ? "ON" : "OFF");}
+            if (device === "Living Room Fan"){
+                var fanStatus = document.getElementById("fanStatus");
+                fanStatus.textContent = "Fan Status :- " + (isOn ? "ON" : "OFF");}
+            if (device === "Bedroom Light"){
+                var ledStatus = document.getElementById("ledStatus");
+                ledStatus.textContent = "Light Status :- " + (isOn ? "ON" : "OFF");}
+            if (device === "Bedroom Fan"){
+                var fanStatus = document.getElementById("fanStatus");
+                fanStatus.textContent = "Fan Status :- " + (isOn ? "ON" : "OFF");}
+            if (device === "Kitchen Light"){
+                var ledStatus = document.getElementById("ledStatus");
+                ledStatus.textContent = "Light Status :- " + (isOn ? "ON" : "OFF");}
+            if (device === "Bathroom Light"){
+                var ledStatus = document.getElementById("ledStatus");
+                ledStatus.textContent = "Light Status :- " + (isOn ? "ON" : "OFF");}}
+    </script>
+    </body>
+</html>
