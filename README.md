@@ -24,8 +24,7 @@ Monitor the status of lights, fans, and doors in real-time using our website. Th
 - *Push Buttons:* Simulate manual switches for lights and fans.
 - *Ultrasonic Sensor:* Detects proximity to automate the door.
 - *Servo Motor:* Operates the automatic door.
-- *Jumper Wires:* Connect components.
-- *Breadboard:* Prototype the circuit.
+- *Jumper Wires and Breadboard:* Connect components.
 - *Arduino IDE:* Develop and upload code to the microcontroller.
 - *Visual Studio Code:* Develop the web interface.
 
